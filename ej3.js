@@ -13,26 +13,31 @@ const members = {
 
 //Punto 1
 const express = require("express");
-
+const cors = require('cors');
 const app = express();
+app.use(cors());
+app.use(express.json())
 
-app.listen("3000", () => {
-    console.log("Server started on port 3000");
-});
+
+
 
 //Punto 2
-// app.get('/productos', (req, res) => {
-//     res.json(members)
-// })
+app.get('/productos', (req, res) => {
+    res.json(members)
+})
 
 //Punto 3
-// app.post('/productos', (req, res) => {
-//     console.log(req.body)
-//     const newMember = { nombre: 'Taza de The Bridge', precio: 1 }
+app.post('/productos', (req, res) => {
+    // console.log(req.body)
+    const newMember = { 
+     id: members.items.length +1,
+     nombre: req.body.nombre,
+     precio: req.body.precio 
+    }
 
-//     members.items.push(newMember)
-//     res.json(members)
-// });
+    members.items.push(newMember)
+    res.json(members)
+});
 
 //Punto 4
 // app.put('/productos/:nombre', (req, res) => {
@@ -98,3 +103,7 @@ app.listen("3000", () => {
 //         res.status(404).json({ msg: `Producto con el nombre ${req.params.nombre} no encontrado` })
 //     }
 //   })
+
+app.listen("3000", () => {
+  console.log("Server started on port 3000");
+});
